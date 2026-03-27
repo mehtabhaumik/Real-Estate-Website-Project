@@ -1,7 +1,9 @@
 import { Property } from '../types';
-import { Bed, Bath, Square, MapPin, ArrowRight } from 'lucide-react';
+import { Bed, Bath, Square, MapPin, ArrowRight, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { useFavorites } from '../context/FavoritesContext';
+import { cn } from '../lib/utils';
 
 interface PropertyCardProps {
   property: Property;
@@ -10,6 +12,9 @@ interface PropertyCardProps {
 }
 
 export default function PropertyCard({ property, isFeatured }: PropertyCardProps) {
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const favorite = isFavorite(property.id);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -17,14 +22,16 @@ export default function PropertyCard({ property, isFeatured }: PropertyCardProps
       viewport={{ once: true }}
       className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
     >
-      <Link to={`/property/${property.id}`} className="block relative aspect-[4/3] overflow-hidden">
-        <img 
-          src={property.images[0]} 
-          alt={property.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <Link to={`/property/${property.id}`} className="block w-full h-full">
+          <img 
+            src={property.images[0]} 
+            alt={property.title}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            referrerPolicy="no-referrer"
+          />
+        </Link>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         
         {isFeatured && (
           <div className="absolute top-4 left-4 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
@@ -32,10 +39,26 @@ export default function PropertyCard({ property, isFeatured }: PropertyCardProps
           </div>
         )}
         
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-900 text-sm font-bold px-3 py-1 rounded-lg shadow-sm">
-          ${property.price.toLocaleString()}
+        <div className="absolute top-4 right-4 flex items-center space-x-2">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              toggleFavorite(property.id);
+            }}
+            className={cn(
+              "p-2 rounded-xl backdrop-blur-md transition-all shadow-lg",
+              favorite 
+                ? "bg-red-500 text-white" 
+                : "bg-white/90 text-gray-900 hover:bg-red-50 hover:text-red-500"
+            )}
+          >
+            <Heart className={cn("h-5 w-5", favorite && "fill-current")} />
+          </button>
+          <div className="bg-white/90 backdrop-blur-sm text-gray-900 text-sm font-bold px-3 py-1 rounded-lg shadow-sm">
+            ${property.price.toLocaleString()}
+          </div>
         </div>
-      </Link>
+      </div>
 
       <div className="p-6">
         <div className="flex items-center text-gray-400 text-xs mb-2">

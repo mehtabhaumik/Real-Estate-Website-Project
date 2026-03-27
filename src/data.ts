@@ -289,5 +289,23 @@ export const TEAM: any[] = [
     role: 'Marketing Director',
     bio: 'Elena ensures every listing gets the premium exposure it deserves.',
     photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400&h=400'
+  },
+  {
+    name: 'Sarah Thompson',
+    role: 'Listing Coordinator',
+    bio: 'Sarah manages the logistics of every listing to ensure a smooth process for sellers.',
+    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&h=400'
+  },
+  {
+    name: 'David Wilson',
+    role: 'Investment Advisor',
+    bio: 'David helps clients build wealth through strategic real estate investments.',
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&h=400'
+  },
+  {
+    name: 'Jessica Lee',
+    role: 'Client Relations Manager',
+    bio: 'Jessica is dedicated to providing an exceptional experience for every client.',
+    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&h=400'
   }
 ];

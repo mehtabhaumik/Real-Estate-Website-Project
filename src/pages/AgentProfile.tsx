@@ -45,7 +45,7 @@ export default function AgentProfile() {
                   <div className="bg-white p-2 rounded-lg shadow-sm">
                     <Mail className="h-5 w-5 text-blue-600" />
                   </div>
-                  <span className="font-bold text-gray-700">Email Bhaumik</span>
+                  <span className="font-bold text-gray-700">Email Nathaniel</span>
                 </div>
               </div>
 
@@ -81,16 +81,16 @@ export default function AgentProfile() {
               </div>
             </div>
 
-            <div className="bg-white p-12 rounded-[40px] shadow-sm border border-gray-100">
+            <div className="bg-white p-6 md:p-12 rounded-[40px] shadow-sm border border-gray-100">
               <h2 className="text-2xl font-extrabold text-gray-900 mb-8">Recent Sales Success</h2>
               <div className="space-y-6">
                 {AGENT.recentSales.map((sale) => (
-                  <div key={sale.id} className="flex items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:border-blue-200 transition-colors">
-                    <div>
+                  <div key={sale.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:border-blue-200 transition-colors gap-4">
+                    <div className="text-center sm:text-left">
                       <p className="font-bold text-gray-900 text-lg">{sale.address}</p>
                       <p className="text-sm text-gray-500">Sold on {new Date(sale.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-center sm:text-right border-t sm:border-t-0 pt-4 sm:pt-0">
                       <p className="text-xl font-extrabold text-blue-600">${sale.price.toLocaleString()}</p>
                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Price</p>
                     </div>
@@ -105,7 +105,7 @@ export default function AgentProfile() {
             <div className="bg-blue-600 rounded-[40px] p-10 text-white shadow-xl">
               <h3 className="text-2xl font-extrabold mb-6">Ready to find your home?</h3>
               <p className="text-blue-100 mb-10 leading-relaxed">
-                Bhaumik is ready to guide you through every step of the process with professional expertise and local knowledge.
+                Nathaniel is ready to guide you through every step of the process with professional expertise and local knowledge.
               </p>
               <button className="w-full bg-white text-blue-600 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all shadow-lg">
                 Schedule a Consultation

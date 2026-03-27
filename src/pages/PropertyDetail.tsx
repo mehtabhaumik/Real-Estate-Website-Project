@@ -1,14 +1,17 @@
 import { useParams, Link } from 'react-router-dom';
 import { PROPERTIES, AGENT } from '../data';
-import { Bed, Bath, Square, MapPin, CheckCircle2, Phone, Mail, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Bed, Bath, Square, MapPin, CheckCircle2, Phone, Mail, ArrowLeft, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import { useState } from 'react';
 import MortgageCalculator from '../components/MortgageCalculator';
 import ContactForm from '../components/ContactForm';
+import { useFavorites } from '../context/FavoritesContext';
+import { cn } from '../lib/utils';
 
 export default function PropertyDetail() {
   const { id } = useParams();
   const property = PROPERTIES.find(p => p.id === id);
   const [activeImage, setActiveImage] = useState(0);
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   if (!property) {
     return (
@@ -19,6 +22,7 @@ export default function PropertyDetail() {
     );
   }
 
+  const favorite = isFavorite(property.id);
   const nextImage = () => setActiveImage((prev) => (prev + 1) % property.images.length);
   const prevImage = () => setActiveImage((prev) => (prev - 1 + property.images.length) % property.images.length);
 
@@ -27,12 +31,25 @@ export default function PropertyDetail() {
       {/* Header */}
       <div className="bg-white border-b border-gray-100 py-6 sticky top-20 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
+          <div className="flex-1">
             <Link to="/" className="flex items-center text-sm text-gray-500 hover:text-blue-600 mb-2 transition-colors">
               <ArrowLeft className="h-4 w-4 mr-1" />
               Back to listings
             </Link>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">{property.title}</h1>
+            <div className="flex items-start justify-between md:justify-start md:space-x-4">
+              <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">{property.title}</h1>
+              <button
+                onClick={() => toggleFavorite(property.id)}
+                className={cn(
+                  "p-3 rounded-2xl transition-all shadow-sm border",
+                  favorite 
+                    ? "bg-red-500 text-white border-red-500" 
+                    : "bg-white text-gray-400 border-gray-200 hover:border-red-500 hover:text-red-500"
+                )}
+              >
+                <Heart className={cn("h-6 w-6", favorite && "fill-current")} />
+              </button>
+            </div>
             <div className="flex items-center text-gray-500 text-sm mt-1">
               <MapPin className="h-4 w-4 mr-1 text-blue-600" />
               <span>{property.address}, {property.city}, {property.state} {property.zip}</span>

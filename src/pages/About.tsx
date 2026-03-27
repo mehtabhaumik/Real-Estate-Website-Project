@@ -70,7 +70,7 @@ export default function About() {
 
       {/* Team */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-6 text-center md:text-left">
           <div>
             <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">Meet the Team</h2>
             <p className="text-blue-600 font-bold mt-2">The experts behind Riverview Realty</p>

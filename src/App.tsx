@@ -8,6 +8,8 @@ import SearchPage from './pages/Search';
 import PropertyDetail from './pages/PropertyDetail';
 import AgentProfile from './pages/AgentProfile';
 import About from './pages/About';
+import { FavoritesProvider } from './context/FavoritesContext';
+import FavoritesPage from './pages/FavoritesPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -19,22 +21,25 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/property/:id" element={<PropertyDetail />} />
-            <Route path="/agent" element={<AgentProfile />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </main>
-        <Footer />
-        <ChatWidget />
-      </div>
-    </Router>
+    <FavoritesProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/property/:id" element={<PropertyDetail />} />
+              <Route path="/agent" element={<AgentProfile />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+            </Routes>
+          </main>
+          <Footer />
+          <ChatWidget />
+        </div>
+      </Router>
+    </FavoritesProvider>
   );
 }

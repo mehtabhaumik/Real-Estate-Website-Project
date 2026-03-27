@@ -9,6 +9,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Search', href: '/search' },
+    { name: 'Favorites', href: '/favorites' },
     { name: 'About Us', href: '/about' },
     { name: 'Agent Profile', href: '/agent' },
   ];

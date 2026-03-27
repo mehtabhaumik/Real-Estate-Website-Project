@@ -131,8 +131,8 @@ export default function Home() {
 
       {/* Featured Listings */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div>
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center space-x-2 mb-4">
               <div className="h-1 w-12 bg-blue-600 rounded-full" />
               <span className="text-xs font-bold uppercase tracking-widest text-blue-600">Premium Selection</span>
@@ -154,8 +154,8 @@ export default function Home() {
       {/* Search Results */}
       <section className="py-24 bg-white border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4 text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
               {filteredProperties.length} Properties Found
             </h2>
             <div className="flex items-center text-sm text-gray-500 font-medium">

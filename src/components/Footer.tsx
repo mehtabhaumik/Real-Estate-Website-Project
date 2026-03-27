@@ -82,10 +82,13 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
           <p>© {currentYear} Riverview Realty. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Sitemap</a>
+          <div className="flex flex-col items-center md:items-end space-y-1 mt-4 md:mt-0">
+            <p className="text-gray-400 font-medium">
+              Developed by <span className="text-blue-500 font-bold">Bhaumik Mehta</span>
+            </p>
+            <p className="text-gray-600 text-[10px] uppercase tracking-widest">
+              Powered by <span className="text-gray-500 font-bold">Google AI Studio</span>
+            </p>
           </div>
         </div>
       </div>
