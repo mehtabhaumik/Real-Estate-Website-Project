@@ -6,6 +6,7 @@ import MortgageCalculator from '../components/MortgageCalculator';
 import ContactForm from '../components/ContactForm';
 import { useFavorites } from '../context/FavoritesContext';
 import { cn } from '../lib/utils';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function PropertyDetail() {
   const { id } = useParams();
@@ -25,6 +26,23 @@ export default function PropertyDetail() {
   const favorite = isFavorite(property.id);
   const nextImage = () => setActiveImage((prev) => (prev + 1) % property.images.length);
   const prevImage = () => setActiveImage((prev) => (prev - 1 + property.images.length) % property.images.length);
+
+  const [direction, setDirection] = useState(0);
+
+  const handleNext = () => {
+    setDirection(1);
+    nextImage();
+  };
+
+  const handlePrev = () => {
+    setDirection(-1);
+    prevImage();
+  };
+
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
@@ -68,31 +86,72 @@ export default function PropertyDetail() {
           <div className="lg:col-span-2 space-y-12">
             {/* Carousel */}
             <div className="relative aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden shadow-lg group">
-              <img 
-                src={property.images[activeImage]} 
-                alt={property.title}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.img
+                  key={activeImage}
+                  src={property.images[activeImage]}
+                  custom={direction}
+                  variants={{
+                    enter: (direction: number) => ({
+                      x: direction > 0 ? 1000 : -1000,
+                      opacity: 0
+                    }),
+                    center: {
+                      zIndex: 1,
+                      x: 0,
+                      opacity: 1
+                    },
+                    exit: (direction: number) => ({
+                      zIndex: 0,
+                      x: direction < 0 ? 1000 : -1000,
+                      opacity: 0
+                    })
+                  }}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 }
+                  }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={1}
+                  onDragEnd={(e, { offset, velocity }) => {
+                    const swipe = swipePower(offset.x, velocity.x);
+
+                    if (swipe < -swipeConfidenceThreshold) {
+                      handleNext();
+                    } else if (swipe > swipeConfidenceThreshold) {
+                      handlePrev();
+                    }
+                  }}
+                  className="absolute w-full h-full object-cover cursor-grab active:cursor-grabbing"
+                  referrerPolicy="no-referrer"
+                />
+              </AnimatePresence>
               
               <button 
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-blue-600 hover:text-white"
+                onClick={handlePrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-blue-600 hover:text-white z-10"
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
               <button 
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-blue-600 hover:text-white"
+                onClick={handleNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-blue-600 hover:text-white z-10"
               >
                 <ChevronRight className="h-6 w-6" />
               </button>
 
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
                 {property.images.map((_, i) => (
                   <button 
                     key={i}
-                    onClick={() => setActiveImage(i)}
+                    onClick={() => {
+                      setDirection(i > activeImage ? 1 : -1);
+                      setActiveImage(i);
+                    }}
                     className={`h-2 rounded-full transition-all ${activeImage === i ? 'w-8 bg-blue-600' : 'w-2 bg-white/50'}`}
                   />
                 ))}

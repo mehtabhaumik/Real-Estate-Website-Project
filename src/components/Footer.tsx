@@ -2,7 +2,7 @@ import { Home, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin } fro
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025;
 
   return (
     <footer className="bg-gray-900 text-gray-300 py-16">
@@ -83,8 +83,8 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
           <p>© {currentYear} Riverview Realty. All rights reserved.</p>
           <div className="flex flex-col items-center md:items-end space-y-1 mt-4 md:mt-0">
-            <p className="text-gray-400 font-medium">
-              Developed by <span className="text-blue-500 font-bold">Bhaumik Mehta</span>
+            <p className="text-gray-400 font-medium text-[11px]">
+              Envisioned and Developed by <span className="text-blue-500 font-bold">Bhaumik Mehta</span>
             </p>
             <p className="text-gray-600 text-[10px] uppercase tracking-widest">
               Powered by <span className="text-gray-500 font-bold">Google AI Studio</span>
